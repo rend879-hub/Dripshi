@@ -736,16 +736,16 @@ html,body{margin:0;padding:0;background:#C8C5BF;min-height:100vh;display:flex;ju
           <button class="reset-btn" id="resetBtn" type="button">今月の出費をリセットする</button>
         </div>
       </div>
-      <!-- Future: AI provider integration -->
+      <!-- Vercel Serverless Function 経由でAPIキーを管理 -->
       <div class="set-sec">
         <div class="set-sec-title">Rakuten API</div>
         <div class="rakuten-api-blk">
-          <div class="rakuten-api-label">Application ID</div>
-          <input class="rakuten-api-input" id="rakutenAppIdInput" type="text" placeholder="楽天 Application ID を入力..." autocomplete="off">
-          <div class="rakuten-api-row">
-            <button class="rakuten-api-save" id="rakutenAppIdSaveBtn" type="button">保存</button>
-            <div class="rakuten-api-status" id="rakutenAppIdStatus"></div>
+          <div class="rakuten-api-label">接続状態</div>
+          <div style="display:flex;align-items:center;gap:8px;padding:8px 0;">
+            <span style="width:8px;height:8px;border-radius:50%;background:#7CB87C;flex-shrink:0;"></span>
+            <span style="font-size:12px;color:var(--ts);">Vercel サーバー経由で接続中</span>
           </div>
+          <div style="font-size:10px;color:var(--tm);line-height:1.6;margin-top:4px;">APIキーはサーバー側で安全に管理されています。<br>変更は Vercel の環境変数から行ってください。</div>
         </div>
       </div>
       <div class="set-sec">
@@ -2334,18 +2334,10 @@ async function searchRakutenProducts(keywords, budget, conceptObject) {
  * @returns {Promise<Array>} 商品リスト
  */
 async function searchRakutenItems(keywords, budget) {
-  // Phase 2.3: 最新API 20260401 対応
-  var LS_KEY = 'dripshi_rakuten_application_id';
-  var applicationId = '';
-  try { applicationId = localStorage.getItem(LS_KEY) || ''; } catch(e) {}
+  // ── Vercel Serverless Function 経由で楽天APIを呼び出す ──
+  // APIキーはサーバー側の環境変数 RAKUTEN_APPLICATION_ID で管理
 
-  if (!applicationId) {
-    // 修正3: API未設定の状態表示
-    showToast('楽天Application IDが未設定です。\nSettingsで設定すると実在商品を検索できます。');
-    return null;
-  }
-
-  // 修正1: 複数キーワード結合（最大5個・重複除去）
+  // 複数キーワード結合（最大5個・重複除去）
   var cleaned = (Array.isArray(keywords) ? keywords : [keywords || ''])
     .filter(Boolean)
     .map(function(k){ return String(k).trim(); })
@@ -2354,17 +2346,11 @@ async function searchRakutenItems(keywords, budget) {
   var keyword = unique.slice(0, 5).join(' ');
   if (!keyword) return [];
 
-  var params = new URLSearchParams({
-    applicationId: applicationId,
-    accessKey:     applicationId,
-    keyword:       keyword,
-    hits:          '10',
-    format:        'json',
-    sort:          '+itemPrice'
-  });
+  var params = new URLSearchParams({ keyword: keyword });
+  if (budget) params.set('budget', String(budget));
 
-  // Phase 2.3: 最新エンドポイント
-  var url = 'https://openapi.rakuten.co.jp/ichibams/api/IchibaItem/Search/20260401?' + params.toString();
+  // フロントエンドは /api/rakuten-search を叩くだけ（APIキー不要）
+  var url = '/api/rakuten-search?' + params.toString();
 
   // SHAPES for visual fallback
   var SHAPES = ['shirt', 'skirt', 'cardi', 'rect'];
@@ -2419,7 +2405,7 @@ async function searchRakutenItems(keywords, budget) {
   } catch(error) {
     console.log('[DRIPSHI] Rakuten error', error);
     // 修正3: API失敗の状態表示
-    showToast('楽天APIへの接続に失敗しました。\n現在はサンプル商品を表示しています。');
+    showToast('楽天APIへの接続に失敗しました。\nVercelの環境変数を確認してください。');
     return [];
   }
 }
@@ -2609,29 +2595,9 @@ document.getElementById('swatchName').textContent=COLORS[colorIdx].name;
 document.getElementById('bsSwName').textContent=COLORS[colorIdx].name;
 updateBudgetDisplay();
 
-/* ── 楽天 Application ID ── */
-(function(){
-  var LS_KEY = 'dripshi_rakuten_application_id';
-  var input = document.getElementById('rakutenAppIdInput');
-  var saveBtn = document.getElementById('rakutenAppIdSaveBtn');
-  var status = document.getElementById('rakutenAppIdStatus');
-  // 保存済みIDを読み込んで表示
-  var savedId = '';
-  try { savedId = localStorage.getItem(LS_KEY) || ''; } catch(e) {}
-  if (savedId) {
-    input.value = savedId;
-    status.textContent = '保存済み';
-    status.style.color = 'var(--accent)';
-  }
-  saveBtn.addEventListener('click', function() {
-    var val = input.value.trim();
-    if (!val) { showToast('Application IDを入力してください'); return; }
-    try { localStorage.setItem(LS_KEY, val); } catch(e) {}
-    status.textContent = '保存済み';
-    status.style.color = 'var(--accent)';
-    showToast('楽天 Application ID を保存しました！');
-  });
-})();
+/* ── Rakuten API: Vercel Serverless Function 経由に移行済み ──
+   Application IDはサーバー側の環境変数 RAKUTEN_APPLICATION_ID で管理。
+   フロントエンドからAPIキーは不要になりました。 */
 
 /* ═══ Phase 2.1 概念検索UX ═══ */
 /**
@@ -2902,4 +2868,3 @@ function buildRakutenSearchQuery(input) {
 </script>
 </body>
 </html>
-
