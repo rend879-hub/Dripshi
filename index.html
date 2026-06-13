@@ -2337,81 +2337,87 @@ async function searchRakutenItems(keywords, budget) {
   // ── Vercel Serverless Function 経由で楽天APIを呼び出す ──
   // APIキーはサーバー側の環境変数 RAKUTEN_APPLICATION_ID で管理
 
-  // 複数キーワード結合（最大5個・重複除去）
+  // 複数キーワード → 短い順に並べて最初の1〜2個だけ使う（AND検索で0件になるのを防ぐ）
   var cleaned = (Array.isArray(keywords) ? keywords : [keywords || ''])
     .filter(Boolean)
     .map(function(k){ return String(k).trim(); })
     .filter(Boolean);
   var unique = cleaned.filter(function(v, i, a){ return a.indexOf(v) === i; });
-  var keyword = unique.slice(0, 5).join(' ');
-  if (!keyword) return [];
 
-  var params = new URLSearchParams({ keyword: keyword });
-  if (budget) params.set('budget', String(budget));
+  // まず最初のキーワード2個で検索、0件なら1個に絞ってリトライ
+  var keywordCandidates = [
+    unique.slice(0, 2).join(' '),  // 2ワード
+    unique[0] || ''                // 1ワード（フォールバック）
+  ].filter(Boolean).filter(function(v, i, a){ return a.indexOf(v) === i; });
 
-  // フロントエンドは /api/rakuten-search を叩くだけ（APIキー不要）
-  var url = '/api/rakuten-search?' + params.toString();
+  for (var ki = 0; ki < keywordCandidates.length; ki++) {
+    var keyword = keywordCandidates[ki];
+    if (!keyword) continue;
+
+    var params = new URLSearchParams({ keyword: keyword });
+    if (budget) params.set('budget', String(budget));
+
+    // フロントエンドは /api/rakuten-search を叩くだけ（APIキー不要）
+    var url = '/api/rakuten-search?' + params.toString();
 
   // SHAPES for visual fallback
   var SHAPES = ['shirt', 'skirt', 'cardi', 'rect'];
 
-  try {
-    var res = await fetch(url);
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    var data = await res.json();
+    try {
+      var res = await fetch(url);
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      var data = await res.json();
 
-    // デバッグ用（確認後に削除予定）
-    console.log('[DRIPSHI] rakuten raw data:', data);
+      console.log('[DRIPSHI] rakuten raw data (keyword="'+keyword+'"):', data);
 
-    var items = Array.isArray(data.Items)
-      ? data.Items.map(function(entry, idx) {
-          var item = entry.Item || entry;
+      var items = Array.isArray(data.Items)
+        ? data.Items.map(function(entry, idx) {
+            var item = entry.Item || entry;
 
-          // 画像URL: mediumImageUrls → smallImageUrls の順で取得
-          var imageUrl = '';
-          if (Array.isArray(item.mediumImageUrls) && item.mediumImageUrls[0]) {
-            imageUrl = item.mediumImageUrls[0].imageUrl || '';
-          } else if (Array.isArray(item.smallImageUrls) && item.smallImageUrls[0]) {
-            imageUrl = item.smallImageUrls[0].imageUrl || '';
-          }
+            var imageUrl = '';
+            if (Array.isArray(item.mediumImageUrls) && item.mediumImageUrls[0]) {
+              imageUrl = item.mediumImageUrls[0].imageUrl || '';
+            } else if (Array.isArray(item.smallImageUrls) && item.smallImageUrls[0]) {
+              imageUrl = item.smallImageUrls[0].imageUrl || '';
+            }
 
-          var resolvedUrl = item.affiliateUrl || item.itemUrl || '';
+            var resolvedUrl = item.affiliateUrl || item.itemUrl || '';
 
-          return {
-            id:         item.itemCode || resolvedUrl || ('r_' + idx),
-            name:       item.itemName  || '商品名未取得',
-            price:      item.itemPrice || 0,
-            image:      imageUrl,
-            imageUrl:   imageUrl,
-            url:        resolvedUrl,
-            productUrl: resolvedUrl,
-            shop:       item.shopName  || '',
-            shopName:   item.shopName  || '',
-            keyword:    keyword,
-            source:     'rakuten',
-            shape:      SHAPES[idx % SHAPES.length],
-            itemName:   item.itemName  || '',
-            itemUrl:    resolvedUrl
-          };
-        })
-      : [];
+            return {
+              id:         item.itemCode || resolvedUrl || ('r_' + idx),
+              name:       item.itemName  || '商品名未取得',
+              price:      item.itemPrice || 0,
+              image:      imageUrl,
+              imageUrl:   imageUrl,
+              url:        resolvedUrl,
+              productUrl: resolvedUrl,
+              shop:       item.shopName  || '',
+              shopName:   item.shopName  || '',
+              keyword:    keyword,
+              source:     'rakuten',
+              shape:      SHAPES[idx % SHAPES.length],
+              itemName:   item.itemName  || '',
+              itemUrl:    resolvedUrl
+            };
+          })
+        : [];
 
-    // デバッグ用（確認後に削除予定）
-    console.log('[DRIPSHI] normalized items:', items);
+      console.log('[DRIPSHI] normalized items (keyword="'+keyword+'"):', items);
 
-    if (!items.length) {
-      showToast('条件に合う楽天商品が見つかりませんでした。\nキーワードを変えて再検索してください。');
-      return [];
+      // 商品が取れたらリトライせず返す
+      if (items.length > 0) return items;
+
+      // 0件 → 次のキーワード候補でリトライ
+      console.log('[DRIPSHI] 0件、次のキーワードでリトライします');
+
+    } catch(error) {
+      console.log('[DRIPSHI] Rakuten error (keyword="'+keyword+'"):', error);
     }
+  } // end for
 
-    return items;
-
-  } catch(error) {
-    console.log('[DRIPSHI] Rakuten error', error);
-    // 修正3: API失敗の状態表示
-    showToast('楽天APIへの接続に失敗しました。\nVercelの環境変数を確認してください。');
-    return [];
-  }
+  // 全キーワード0件
+  showToast('条件に合う楽天商品が見つかりませんでした。\nキーワードを変えて再検索してください。');
+  return [];
 }
 
 /* ── Scene selector ── */
