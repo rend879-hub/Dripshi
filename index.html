@@ -447,6 +447,66 @@ html,body{margin:0;padding:0;background:#C8C5BF;min-height:100vh;display:flex;ju
 .cs2-interpret.show{display:block;}
 .cs2-interpret-label{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
 .cs2-interpret-text{font-size:12px;color:var(--ts);line-height:1.7;font-style:italic;}
+
+/* ═══════════════════════════════════════
+   スマホ実機レイアウト修正
+   600px以下: 全画面表示
+   600px超:   390×720 モック表示を維持
+═══════════════════════════════════════ */
+@media (max-width: 600px) {
+  html,
+  body {
+    width: 100%;
+    min-height: 100dvh;
+    padding: 0;
+    background: var(--base);
+    display: block;
+    overflow: hidden;
+  }
+
+  #app {
+    width: 100%;
+    max-width: none;
+    height: 100dvh;
+    min-height: 100dvh;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .hd {
+    padding-top: calc(14px + env(safe-area-inset-top));
+    padding-left: 18px;
+    padding-right: 18px;
+    padding-bottom: 12px;
+  }
+
+  .sc {
+    padding: 18px 18px calc(88px + env(safe-area-inset-bottom));
+  }
+
+  .bnav {
+    height: calc(68px + env(safe-area-inset-bottom));
+    padding-bottom: env(safe-area-inset-bottom);
+    border-radius: 0;
+  }
+
+  .bs-overlay,
+  .sheet-overlay {
+    border-radius: 0;
+  }
+
+  .bs-sheet,
+  .detail-sheet {
+    border-radius: 24px 24px 0 0;
+  }
+
+  /* iPhone Safari 入力ズーム対策 */
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
 </style>
 </head>
 <body>
