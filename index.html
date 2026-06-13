@@ -2360,46 +2360,50 @@ async function searchRakutenItems(keywords, budget) {
     if (!res.ok) throw new Error('HTTP ' + res.status);
     var data = await res.json();
 
-    // 20260401 レスポンス構造: data.Items[].Item or data.Items[].item (フラット対応)
-    var rawItems = (data.Items || []).map(function(obj) {
-      return obj.Item || obj.item || obj;
-    });
+    // デバッグ用（確認後に削除予定）
+    console.log('[DRIPSHI] rakuten raw data:', data);
 
-    if (!rawItems.length) {
-      console.log('[DRIPSHI] Rakuten items: 0件');
+    var items = Array.isArray(data.Items)
+      ? data.Items.map(function(entry, idx) {
+          var item = entry.Item || entry;
+
+          // 画像URL: mediumImageUrls → smallImageUrls の順で取得
+          var imageUrl = '';
+          if (Array.isArray(item.mediumImageUrls) && item.mediumImageUrls[0]) {
+            imageUrl = item.mediumImageUrls[0].imageUrl || '';
+          } else if (Array.isArray(item.smallImageUrls) && item.smallImageUrls[0]) {
+            imageUrl = item.smallImageUrls[0].imageUrl || '';
+          }
+
+          var resolvedUrl = item.affiliateUrl || item.itemUrl || '';
+
+          return {
+            id:         item.itemCode || resolvedUrl || ('r_' + idx),
+            name:       item.itemName  || '商品名未取得',
+            price:      item.itemPrice || 0,
+            image:      imageUrl,
+            imageUrl:   imageUrl,
+            url:        resolvedUrl,
+            productUrl: resolvedUrl,
+            shop:       item.shopName  || '',
+            shopName:   item.shopName  || '',
+            keyword:    keyword,
+            source:     'rakuten',
+            shape:      SHAPES[idx % SHAPES.length],
+            itemName:   item.itemName  || '',
+            itemUrl:    resolvedUrl
+          };
+        })
+      : [];
+
+    // デバッグ用（確認後に削除予定）
+    console.log('[DRIPSHI] normalized items:', items);
+
+    if (!items.length) {
       showToast('条件に合う楽天商品が見つかりませんでした。\nキーワードを変えて再検索してください。');
       return [];
     }
 
-    var items = rawItems.map(function(item, idx) {
-      // 画像URL: mediumImageUrls / imageUrl どちらも対応
-      var imageUrl = '';
-      if (item.mediumImageUrls && item.mediumImageUrls[0]) {
-        imageUrl = item.mediumImageUrls[0].imageUrl || item.mediumImageUrls[0] || '';
-      } else if (item.imageUrl) {
-        imageUrl = item.imageUrl;
-      }
-      // 修正2: affiliateUrl優先
-      var resolvedUrl = item.affiliateUrl || item.itemUrl || '';
-      return {
-        id:          item.itemCode || item.itemUrl || ('r_' + idx),
-        name:        item.itemName  || '',
-        price:       item.itemPrice || 0,
-        image:       imageUrl,
-        imageUrl:    imageUrl,
-        url:         resolvedUrl,
-        productUrl:  resolvedUrl,
-        shop:        item.shopName  || '',
-        shopName:    item.shopName  || '',
-        keyword:     keyword,
-        source:      'rakuten',
-        shape:       SHAPES[idx % SHAPES.length],
-        itemName:    item.itemName  || '',
-        itemUrl:     resolvedUrl
-      };
-    });
-
-    console.log('[DRIPSHI] Rakuten items', items);
     return items;
 
   } catch(error) {
