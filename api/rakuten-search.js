@@ -40,6 +40,7 @@ export default async function handler(req, res) {
   // ── 楽天APIリクエスト組み立て ──
   const params = new URLSearchParams({
     applicationId,
+    accessKey:    applicationId,
     keyword:  keyword.trim(),
     hits:     '10',
     format:   'json',
