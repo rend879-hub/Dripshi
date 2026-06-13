@@ -64,7 +64,12 @@ export default async function handler(req, res) {
     if (!rakutenRes.ok) {
       const errText = await rakutenRes.text();
       console.error('[DRIPSHI] Rakuten API error:', rakutenRes.status, errText);
-      return res.status(502).json({ error: 'Rakuten API error', Items: [] });
+      return res.status(502).json({
+        error: 'Rakuten API error',
+        status: rakutenRes.status,
+        detail: errText,
+        Items: []
+      });
     }
 
     const data = await rakutenRes.json();
