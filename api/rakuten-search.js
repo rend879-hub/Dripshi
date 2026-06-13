@@ -59,7 +59,12 @@ export default async function handler(req, res) {
 
   try {
     const rakutenRes = await fetch(rakutenUrl, {
-      headers: { 'User-Agent': 'DRIPSHI/1.0' },
+      headers: {
+        'User-Agent': 'DRIPSHI/1.0',
+        'Referer':    process.env.VERCEL_URL
+                        ? `https://${process.env.VERCEL_URL}/`
+                        : 'https://dripshi.vercel.app/',
+      },
     });
 
     if (!rakutenRes.ok) {
