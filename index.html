@@ -3092,6 +3092,22 @@ function buildRakutenSearchQuery(input) {
           return !usedKeywords.some(function(kw) { return target.indexOf(kw) !== -1; });
         });
       }
+
+      /* Phase2.8.1: ノイズ商品除外フィルタ */
+      var EXCLUDE_WORDS = [
+        'ベビー', 'キッズ', '子供', '男の子', '女の子',
+        '80cm', '90cm', '100cm', '110cm', '120cm', '130cm', '140cm', '150cm',
+        'メンズ', 'コスプレ', '制服', 'ハロウィン'
+      ];
+      if (items && items.length > 0) {
+        items = items.filter(function(item) {
+          var name = (item.name || item.itemName || '').toLowerCase();
+          return !EXCLUDE_WORDS.some(function(word) {
+            return name.indexOf(word.toLowerCase()) !== -1;
+          });
+        });
+      }
+
       if (!items || items.length === 0) {
         var co2 = { oshiName: displayName, vibe: moodLabel, color: colorLabel, category: category, budget: budget || 10000 };
         items = generateMockProducts(co2, keywords);
