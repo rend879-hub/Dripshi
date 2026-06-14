@@ -381,34 +381,26 @@ html,body{margin:0;padding:0;background:#C8C5BF;min-height:100vh;display:flex;ju
 .cr-kw-list{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;}
 .cr-kw-tag{display:inline-block;font-size:10px;letter-spacing:.06em;padding:4px 10px;border-radius:20px;background:var(--pale);color:var(--accent);border:.5px solid rgba(0,0,0,.06);}
 .cr-products-label{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--tm);margin-bottom:10px;}
-.cr-products{display:flex;flex-direction:column;gap:14px;padding:0 18px;}
-/* ── 楽天仕様 商品カード (Phase 2.6) ── */
-.cr-prod-card{background:#fff;border-radius:14px;border:.5px solid var(--bd);overflow:hidden;box-shadow:0 2px 10px rgba(44,42,38,.05);}
-/* 画像エリア：縦比率固定でトリミング */
-.cr-prod-img{width:100%;aspect-ratio:4/3;background:var(--surf);position:relative;overflow:hidden;}
-.cr-prod-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
-.cr-prod-img-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;}
+.cr-products{display:flex;flex-direction:column;gap:10px;padding:0 18px;}
+/* ── 楽天仕様 商品カード (Phase 2.2) ── */
+.cr-prod-card{background:#fff;border-radius:12px;border:.5px solid var(--bd);overflow:hidden;}
+.cr-prod-img{width:100%;height:90px;background:var(--surf);display:flex;align-items:center;justify-content:center;position:relative;}
+.cr-prod-img-placeholder{display:flex;flex-direction:column;align-items:center;gap:6px;}
 .cr-prod-sil{flex-shrink:0;}
-/* バッジ：画像左上に */
-.cr-prod-source-badge{position:absolute;top:8px;left:8px;font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:20px;font-weight:600;backdrop-filter:blur(4px);}
-.cr-prod-source-badge.badge-rakuten{background:rgba(184,58,58,.15);color:#B83A3A;border:.5px solid rgba(184,58,58,.3);}
-.cr-prod-source-badge.badge-sample{background:rgba(44,42,38,.1);color:var(--tm);border:.5px solid var(--bd);}
-/* 本文エリア */
-.cr-prod-body{padding:12px 14px 8px;}
-.cr-prod-name{font-size:12px;font-weight:500;color:var(--tp);margin-bottom:8px;line-height:1.65;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-/* 価格とショップを横並び */
-.cr-prod-meta{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:10px;}
-.cr-prod-price{font-size:17px;font-weight:600;color:var(--accent);letter-spacing:.01em;flex-shrink:0;}
-.cr-prod-shop{font-size:10px;color:var(--tm);text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;min-width:0;}
-.cr-prod-kw-wrap{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:4px;}
+.cr-prod-source-badge{position:absolute;top:6px;right:8px;font-size:8px;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:20px;font-weight:500;}
+.cr-prod-source-badge.badge-rakuten{background:rgba(191,60,60,.12);color:#B83A3A;border:.5px solid rgba(191,60,60,.25);}
+.cr-prod-source-badge.badge-sample{background:rgba(44,42,38,.08);color:var(--tm);border:.5px solid var(--bd);}
+.cr-prod-body{padding:10px 12px 4px;}
+.cr-prod-name{font-size:12px;font-weight:500;color:var(--tp);margin-bottom:4px;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.cr-prod-price{font-size:15px;font-weight:500;color:var(--accent);margin-bottom:3px;letter-spacing:.02em;}
+.cr-prod-shop{font-size:10px;color:var(--tm);margin-bottom:4px;}
+.cr-prod-kw-wrap{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px;}
 .cr-prod-kw{display:inline-block;font-size:9px;letter-spacing:.06em;padding:2px 7px;border-radius:20px;background:var(--pale);color:var(--accent);}
-/* ボタンエリア：楽天ボタンを主役に */
-.cr-prod-btns{display:flex;gap:8px;padding:0 14px 14px;}
-.cr-prod-save{width:44px;flex-shrink:0;height:40px;border-radius:10px;border:.5px solid var(--bdm);background:none;color:var(--ts);font-family:'DM Sans',sans-serif;font-size:10px;cursor:pointer;transition:background .2s,border-color .2s,color .2s;-webkit-appearance:none;display:flex;align-items:center;justify-content:center;}
+.cr-prod-btns{display:flex;gap:6px;padding:0 12px 10px;}
+.cr-prod-save{flex:1;height:30px;border-radius:8px;border:.5px solid var(--bdm);background:none;color:var(--ts);font-family:'DM Sans',sans-serif;font-size:10px;cursor:pointer;transition:background .2s,border-color .2s,color .2s;-webkit-appearance:none;}
 .cr-prod-save:hover{background:var(--pale);border-color:var(--accent);color:var(--accent);}
-.cr-prod-rakuten{flex:1;height:40px;border-radius:10px;border:none;background:var(--accent);color:#fff;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:.06em;cursor:pointer;transition:filter .2s,transform .1s;-webkit-appearance:none;}
-.cr-prod-rakuten:hover{filter:brightness(.9);}
-.cr-prod-rakuten:active{transform:scale(.98);}
+.cr-prod-rakuten{flex:1;height:30px;border-radius:8px;border:none;background:var(--accent);color:#fff;font-family:'DM Sans',sans-serif;font-size:10px;cursor:pointer;transition:filter .2s;-webkit-appearance:none;}
+.cr-prod-rakuten:hover{filter:brightness(.88);}
 /* ── 楽天API設定 (Settings) ── */
 .rakuten-api-blk{padding:14px 16px;background:#fff;border-radius:12px;border:.5px solid var(--bd);}
 .rakuten-api-label{font-size:11px;color:var(--ts);margin-bottom:6px;letter-spacing:.04em;}
@@ -455,6 +447,20 @@ html,body{margin:0;padding:0;background:#C8C5BF;min-height:100vh;display:flex;ju
 .cs2-interpret.show{display:block;}
 .cs2-interpret-label{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
 .cs2-interpret-text{font-size:12px;color:var(--ts);line-height:1.7;font-style:italic;}
+
+/* ═══ Phase 2.6 構造化検索UI ═══ */
+.p26-field{margin-bottom:14px;}
+.p26-label{font-size:11px;letter-spacing:.08em;color:var(--ts);margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+.p26-required{font-size:9px;letter-spacing:.1em;color:var(--accent);background:var(--pale);padding:2px 6px;border-radius:10px;}
+.p26-input{width:100%;height:40px;border-radius:10px;border:.5px solid var(--bdm);background:var(--surf);color:var(--tp);font-family:'DM Sans',sans-serif;font-size:13px;padding:0 14px;outline:none;transition:border-color .2s;-webkit-appearance:none;}
+.p26-input:focus{border-color:var(--accent);}
+.p26-input::placeholder{color:var(--tm);}
+.p26-hint{font-size:10px;color:var(--tm);margin-top:5px;letter-spacing:.04em;line-height:1.5;}
+.p26-chip-row{display:flex;flex-wrap:wrap;gap:6px;}
+.p26-chip{display:inline-flex;align-items:center;height:30px;padding:0 12px;border-radius:20px;border:.5px solid var(--bdm);background:var(--surf);color:var(--ts);font-size:11px;letter-spacing:.04em;cursor:pointer;transition:all .18s;-webkit-tap-highlight-color:transparent;user-select:none;}
+.p26-chip:hover{border-color:var(--accent);color:var(--accent);}
+.p26-chip.p26-chip-sel{background:var(--accent);color:#fff;border-color:var(--accent);}
+.p26-chip:active{transform:scale(.95);}
 
 /* ═══════════════════════════════════════
    スマホ実機レイアウト修正
@@ -581,92 +587,93 @@ html,body{margin:0;padding:0;background:#C8C5BF;min-height:100vh;display:flex;ju
         </div>
       </div>
 
-      <!-- Phase 2.1: 概念検索UX (楽天API接続前) -->
+      <!-- Phase 2.6: 構造化検索UI -->
       <div class="cs2-section">
         <div class="cs2-title">今日は誰をイメージする？</div>
-        <div class="cs2-mode-row" id="cs2ModeRow">
-          <button class="cs2-mode-btn cs2-active" data-mode="free" type="button">おまかせ</button>
-          <button class="cs2-mode-btn" data-mode="guided" type="button">詳細検索</button>
-          <button class="cs2-mode-btn cs2-disabled" data-mode="savedOshi" type="button">登録済み推し</button>
+
+        <!-- ① 推し名（表示用のみ・検索には使わない） -->
+        <div class="p26-field">
+          <div class="p26-label">① 今日、誰をイメージする？</div>
+          <input class="p26-input" id="p26OshiName" type="text" placeholder="例：初音ミク、Kobo Kanaeru…" maxlength="40">
+          <div class="p26-hint">✦ この名前は表示のみ。検索キーワードには使いません</div>
         </div>
-        <textarea class="cs2-textarea" id="cs2FreeText"
-          placeholder="推しの名前・色・雰囲気を自由に入力&#10;例：青、クール、軍服っぽい"></textarea>
-        <div class="cs2-guided-panel" id="cs2GuidedPanel">
-          <div class="cs2-tag-group">
-            <div class="cs2-tag-label">色</div>
-            <div class="cs2-tags">
-              <span class="cs2-tag" data-group="color" data-val="白">白</span>
-              <span class="cs2-tag" data-group="color" data-val="黒">黒</span>
-              <span class="cs2-tag" data-group="color" data-val="青">青</span>
-              <span class="cs2-tag" data-group="color" data-val="赤">赤</span>
-              <span class="cs2-tag" data-group="color" data-val="ピンク">ピンク</span>
-              <span class="cs2-tag" data-group="color" data-val="ゴールド">ゴールド</span>
-            </div>
-          </div>
-          <div class="cs2-tag-group">
-            <div class="cs2-tag-label">雰囲気</div>
-            <div class="cs2-tags">
-              <span class="cs2-tag" data-group="mood" data-val="クール">クール</span>
-              <span class="cs2-tag" data-group="mood" data-val="儚い">儚い</span>
-              <span class="cs2-tag" data-group="mood" data-val="強気">強気</span>
-              <span class="cs2-tag" data-group="mood" data-val="優雅">優雅</span>
-              <span class="cs2-tag" data-group="mood" data-val="ダーク">ダーク</span>
-              <span class="cs2-tag" data-group="mood" data-val="爽やか">爽やか</span>
-            </div>
-          </div>
-          <div class="cs2-tag-group">
-            <div class="cs2-tag-label">モチーフ</div>
-            <div class="cs2-tags">
-              <span class="cs2-tag" data-group="motif" data-val="軍服">軍服</span>
-              <span class="cs2-tag" data-group="motif" data-val="花">花</span>
-              <span class="cs2-tag" data-group="motif" data-val="星">星</span>
-              <span class="cs2-tag" data-group="motif" data-val="和装">和装</span>
-              <span class="cs2-tag" data-group="motif" data-val="ストリート">ストリート</span>
-            </div>
-          </div>
-          <div class="cs2-tag-group">
-            <div class="cs2-tag-label">カテゴリ</div>
-            <div class="cs2-tags">
-              <span class="cs2-tag" data-group="category" data-val="tops">トップス</span>
-              <span class="cs2-tag" data-group="category" data-val="bottoms">ボトムス</span>
-              <span class="cs2-tag" data-group="category" data-val="dress">ワンピース</span>
-              <span class="cs2-tag" data-group="category" data-val="outer">アウター</span>
-              <span class="cs2-tag" data-group="category" data-val="shoes">シューズ</span>
-              <span class="cs2-tag" data-group="category" data-val="accessory">アクセ</span>
-            </div>
-          </div>
-          <div class="cs2-two-col">
-            <div class="cs2-tag-group" style="flex:1">
-              <div class="cs2-tag-label">予算</div>
-              <select class="cs2-select" id="cs2Budget">
-                <option value="">指定なし</option>
-                <option value="5000">〜¥5,000</option>
-                <option value="10000">〜¥10,000</option>
-                <option value="20000">〜¥20,000</option>
-                <option value="30000">〜¥30,000</option>
-              </select>
-            </div>
-            <div class="cs2-tag-group" style="flex:1">
-              <div class="cs2-tag-label">日常度</div>
-              <div class="cs2-daily-row" id="cs2DailyRow">
-                <span class="cs2-daily-btn cs2-daily-active" data-lv="3">3</span>
-                <span class="cs2-daily-btn" data-lv="1">1</span>
-                <span class="cs2-daily-btn" data-lv="2">2</span>
-                <span class="cs2-daily-btn" data-lv="4">4</span>
-                <span class="cs2-daily-btn" data-lv="5">5</span>
-              </div>
-            </div>
+
+        <!-- ② アイテム種別 -->
+        <div class="p26-field">
+          <div class="p26-label">② アイテム種別 <span class="p26-required">必須</span></div>
+          <div class="p26-chip-row" id="p26CategoryRow">
+            <span class="p26-chip" data-group="category" data-val="トップス">トップス</span>
+            <span class="p26-chip" data-group="category" data-val="ボトムス">ボトムス</span>
+            <span class="p26-chip" data-group="category" data-val="ワンピース">ワンピース</span>
+            <span class="p26-chip" data-group="category" data-val="アウター">アウター</span>
+            <span class="p26-chip" data-group="category" data-val="バッグ">バッグ</span>
+            <span class="p26-chip" data-group="category" data-val="アクセサリー">アクセサリー</span>
           </div>
         </div>
-        <button class="cs2-search-btn" id="cs2SearchBtn" type="button">コーデを探す</button>
+
+        <!-- ③ カラー -->
+        <div class="p26-field">
+          <div class="p26-label">③ カラー <span class="p26-required">必須</span></div>
+          <div class="p26-chip-row" id="p26ColorRow">
+            <span class="p26-chip" data-group="color" data-val="ホワイト">ホワイト</span>
+            <span class="p26-chip" data-group="color" data-val="ブラック">ブラック</span>
+            <span class="p26-chip" data-group="color" data-val="ネイビー">ネイビー</span>
+            <span class="p26-chip" data-group="color" data-val="ブルー">ブルー</span>
+            <span class="p26-chip" data-group="color" data-val="ピンク">ピンク</span>
+            <span class="p26-chip" data-group="color" data-val="パープル">パープル</span>
+            <span class="p26-chip" data-group="color" data-val="グリーン">グリーン</span>
+            <span class="p26-chip" data-group="color" data-val="ベージュ">ベージュ</span>
+            <span class="p26-chip" data-group="color" data-val="グレー">グレー</span>
+          </div>
+        </div>
+
+        <!-- ④ 雰囲気 -->
+        <div class="p26-field">
+          <div class="p26-label">④ 雰囲気 <span class="p26-required">必須</span></div>
+          <div class="p26-chip-row" id="p26MoodRow">
+            <span class="p26-chip" data-group="mood" data-val="透明感">透明感</span>
+            <span class="p26-chip" data-group="mood" data-val="クール">クール</span>
+            <span class="p26-chip" data-group="mood" data-val="ガーリー">ガーリー</span>
+            <span class="p26-chip" data-group="mood" data-val="フェミニン">フェミニン</span>
+            <span class="p26-chip" data-group="mood" data-val="ナチュラル">ナチュラル</span>
+            <span class="p26-chip" data-group="mood" data-val="モード">モード</span>
+            <span class="p26-chip" data-group="mood" data-val="カジュアル">カジュアル</span>
+            <span class="p26-chip" data-group="mood" data-val="近未来">近未来</span>
+            <span class="p26-chip" data-group="mood" data-val="クラシカル">クラシカル</span>
+          </div>
+        </div>
+
+        <!-- ⑤ 予算 -->
+        <div class="p26-field">
+          <div class="p26-label">⑤ 予算</div>
+          <div class="p26-chip-row" id="p26BudgetRow">
+            <span class="p26-chip" data-group="budget" data-val="3000">〜3,000円</span>
+            <span class="p26-chip" data-group="budget" data-val="5000">〜5,000円</span>
+            <span class="p26-chip" data-group="budget" data-val="10000">〜10,000円</span>
+            <span class="p26-chip p26-chip-sel" data-group="budget" data-val="">制限なし</span>
+          </div>
+        </div>
+
+        <!-- 非表示ブリッジ要素（旧ロジックとの互換性維持） -->
+        <div style="display:none;" aria-hidden="true">
+          <div id="cs2ModeRow"></div>
+          <div id="cs2GuidedPanel"></div>
+          <div id="cs2DailyRow"></div>
+          <textarea id="cs2FreeText"></textarea>
+          <select id="cs2Budget"></select>
+        </div>
+
+        <!-- 検索ボタン -->
+        <button class="cs2-search-btn" id="cs2SearchBtn" type="button">コーデを探す →</button>
+
+        <!-- 検索後の解釈バナー -->
         <div class="cs2-interpret" id="cs2Interpret">
-          <div class="cs2-interpret-label">✦ DRIPSHI解釈</div>
-          <div class="cs2-interpret-text" id="cs2InterpretText">今回は"日常に溶ける概念"として解釈しました</div>
+          <div class="cs2-interpret-label">✦ 今日のイメージ</div>
+          <div class="cs2-interpret-text" id="cs2InterpretText"></div>
         </div>
-        <!-- Phase 2.1: 概念コーデ結果表示エリア（cs2-section直下に移動） -->
-        <div class="concept-result" id="conceptResult">
-          <!-- ローディング or 結果がここに入る -->
-        </div>
+
+        <!-- 結果エリア -->
+        <div class="concept-result" id="conceptResult"></div>
       </div>
 
       <!-- Phase 2.1: 旧入力フォーム（非表示・ブリッジ用） -->
@@ -2555,26 +2562,26 @@ function renderConceptResult(concept, el) {
     // Phase 2.3: imageUrl / image 両対応
     var imgSrc = p.imageUrl || p.image || '';
     var imgHtml = (imgSrc !== '')
-      ? '<img src="'+imgSrc+'" alt="'+((p.name||p.itemName||'').replace(/"/g,'&quot;'))+'">'
+      ? '<img src="'+imgSrc+'" alt="'+((p.name||p.itemName||'').replace(/"/g,'&quot;'))+'" style="width:100%;height:90px;object-fit:cover;display:block;">'
       : '<div class="cr-prod-img-placeholder"><div style="'+silCss+'"></div></div>';
+    var kwParts = (p.keyword||'').split(/\s+/).filter(Boolean).slice(0,3);
+    var kwTagsHtml = kwParts.map(function(k){return '<span class="cr-prod-kw">'+k+'</span>';}).join('');
     // Phase 2.3: productUrl / url / itemUrl すべて対応
     var itemUrl = p.productUrl || p.url || p.itemUrl || '';
-    var isRakuten = p.source === 'rakuten';
     return '<div class="cr-prod-card" data-prod-id="'+p.id+'">'
       + '<div class="cr-prod-img">'
       +   imgHtml
-      +   '<div class="cr-prod-source-badge '+(isRakuten?'badge-rakuten':'badge-sample')+'">'+(isRakuten?'RAKUTEN':'SAMPLE')+'</div>'
+      +   '<div class="cr-prod-source-badge '+(p.source==='rakuten'?'badge-rakuten':'badge-sample')+'">'+(p.source==='rakuten'?'RAKUTEN':'SAMPLE')+'</div>'
       + '</div>'
       + '<div class="cr-prod-body">'
       +   '<div class="cr-prod-name">'+(p.name||p.itemName||'')+'</div>'
-      +   '<div class="cr-prod-meta">'
-      +     '<div class="cr-prod-price">¥'+(p.price||0).toLocaleString()+'</div>'
-      +     '<div class="cr-prod-shop">'+(p.shop||p.shopName||'')+'</div>'
-      +   '</div>'
+      +   '<div class="cr-prod-price">¥'+(p.price||0).toLocaleString()+'</div>'
+      +   '<div class="cr-prod-shop">'+(p.shop||p.shopName||'')+'</div>'
+      +   '<div class="cr-prod-kw-wrap">'+kwTagsHtml+'</div>'
       + '</div>'
       + '<div class="cr-prod-btns">'
-      +   '<button class="cr-prod-save" data-prod-id="'+p.id+'" type="button" title="クローゼットに保存">♡</button>'
-      +   '<button class="cr-prod-rakuten" data-item-url="'+itemUrl+'" type="button">楽天で見る →</button>'
+      +   '<button class="cr-prod-save" data-prod-id="'+p.id+'" type="button">保存</button>'
+      +   '<button class="cr-prod-rakuten" data-item-url="'+itemUrl+'" type="button">楽天で見る</button>'
       + '</div>'
       + '</div>';
   }).join('');
@@ -2851,95 +2858,148 @@ function buildRakutenSearchQuery(input) {
 
   return result;
 }
+
+/* ═══════════════════════════════════════════
+   Phase 2.6 — 構造化検索UI ロジック
+═══════════════════════════════════════════ */
 (function() {
-  var cs2Mode = 'free';
-  var cs2DailyLevel = 3;
-  var cs2SelectedTags = { color: [], mood: [], motif: [], category: [] };
 
-  document.getElementById('cs2ModeRow').addEventListener('click', function(e) {
-    var btn = e.target.closest('.cs2-mode-btn');
-    if (!btn || btn.classList.contains('cs2-disabled')) return;
-    cs2Mode = btn.dataset.mode;
-    document.querySelectorAll('.cs2-mode-btn').forEach(function(b) { b.classList.toggle('cs2-active', b === btn); });
-    document.getElementById('cs2GuidedPanel').classList.toggle('open', cs2Mode === 'guided');
-  });
+  /* カテゴリ → 楽天検索ワード変換 */
+  var CATEGORY_KEYWORD_MAP = {
+    'トップス':    ['ブラウス', 'シャツ', 'ニット'],
+    'ボトムス':    ['スカート', 'パンツ'],
+    'ワンピース':  ['ワンピース'],
+    'アウター':    ['ジャケット', 'カーディガン', 'コート'],
+    'バッグ':      ['バッグ'],
+    'アクセサリー':['アクセサリー', 'ネックレス', 'ピアス']
+  };
 
-  document.querySelectorAll('.cs2-tag').forEach(function(tag) {
-    tag.addEventListener('click', function() {
-      var g = tag.dataset.group, v = tag.dataset.val;
-      if (g === 'category') {
-        document.querySelectorAll('[data-group="category"]').forEach(function(t) { t.classList.remove('sel'); });
-        cs2SelectedTags.category = [];
+  /* 雰囲気 → 楽天検索ワード変換 */
+  var MOOD_KEYWORD_MAP = {
+    '透明感':  ['シアー', 'オーガンジー', 'アイスブルー', 'パール'],
+    'クール':  ['モノトーン', 'シャープ', 'センタープレス'],
+    'ガーリー':['フリル', 'リボン', 'パステル'],
+    'フェミニン':['上品', 'レース', 'やわらか'],
+    'ナチュラル':['リネン', 'コットン', 'ベージュ'],
+    'モード':  ['プリーツ', 'ミニマル', 'ブラック'],
+    'カジュアル':['デニム', 'スウェット', 'ゆったり'],
+    '近未来':  ['シルバー', 'メタリック', 'クリア'],
+    'クラシカル':['チェック', 'クラシック', 'レトロ']
+  };
+
+  /* 構造化キーワード生成 — 推し名を一切含めない */
+  function buildStructuredRakutenKeywords(input) {
+    var category = input.category || '';
+    var color    = input.color    || '';
+    var mood     = input.mood     || '';
+
+    var categoryWords = CATEGORY_KEYWORD_MAP[category] || [category];
+    var moodWords     = MOOD_KEYWORD_MAP[mood]         || [mood];
+
+    var mainCategoryWord = categoryWords[0] || '';
+    var mainMoodWord     = moodWords[0]     || '';
+
+    var mainQuery = ['レディース', color, mainMoodWord, mainCategoryWord].filter(Boolean).join(' ');
+
+    var subQueries = [];
+    categoryWords.forEach(function(cw) {
+      moodWords.forEach(function(mw) {
+        var q = ['レディース', color, mw, cw].filter(Boolean).join(' ');
+        if (q && q !== mainQuery) subQueries.push(q);
+      });
+    });
+
+    subQueries = subQueries.filter(function(v, i, a) { return a.indexOf(v) === i; }).slice(0, 5);
+    return [mainQuery].concat(subQueries).filter(Boolean);
+  }
+
+  /* Phase2.6: 選択状態 */
+  var p26 = { category: '', color: '', mood: '', budget: '' };
+
+  /* チップ選択（単一選択） */
+  document.querySelectorAll('.p26-chip').forEach(function(chip) {
+    chip.addEventListener('click', function() {
+      var g = chip.dataset.group;
+      var v = chip.dataset.val;
+
+      // 同じグループの選択を解除
+      document.querySelectorAll('.p26-chip[data-group="' + g + '"]').forEach(function(c) {
+        c.classList.remove('p26-chip-sel');
+      });
+
+      // 既に選ばれていたら解除（トグル）
+      if (p26[g] === v) {
+        p26[g] = '';
+      } else {
+        p26[g] = v;
+        chip.classList.add('p26-chip-sel');
       }
-      var arr = cs2SelectedTags[g] || [];
-      var idx = arr.indexOf(v);
-      if (idx === -1) { arr.push(v); tag.classList.add('sel'); }
-      else { arr.splice(idx, 1); tag.classList.remove('sel'); }
-      cs2SelectedTags[g] = arr;
     });
   });
 
-  document.getElementById('cs2DailyRow').addEventListener('click', function(e) {
-    var btn = e.target.closest('.cs2-daily-btn');
-    if (!btn) return;
-    cs2DailyLevel = parseInt(btn.dataset.lv, 10);
-    document.querySelectorAll('.cs2-daily-btn').forEach(function(b) { b.classList.toggle('cs2-daily-active', b === btn); });
-  });
+  /* 検索ボタン */
+  document.getElementById('cs2SearchBtn').addEventListener('click', async function() {
+    var oshiName = (document.getElementById('p26OshiName') ? document.getElementById('p26OshiName').value.trim() : '') || '';
+    var category = p26.category;
+    var color    = p26.color;
+    var mood     = p26.mood;
+    var budget   = p26.budget ? parseInt(p26.budget, 10) : undefined;
 
-  document.getElementById('cs2SearchBtn').addEventListener('click', function() {
-    var rawText  = document.getElementById('cs2FreeText').value.trim();
-    var budgetVal = document.getElementById('cs2Budget').value;
+    /* 必須バリデーション */
+    if (!category) { showToast('② アイテム種別を選んでください'); return; }
+    if (!color)    { showToast('③ カラーを選んでください'); return; }
+    if (!mood)     { showToast('④ 雰囲気を選んでください'); return; }
 
-    // ── Phase 2.1 修正: cs2Budget → csBudget 反映 ──
-    var oldBudget = document.getElementById('csBudget');
-    var newBudget = document.getElementById('cs2Budget');
-    if (oldBudget && newBudget && newBudget.value) {
-      oldBudget.value = newBudget.value;
-    }
+    /* 楽天キーワード生成（推し名は含めない） */
+    var keywords = buildStructuredRakutenKeywords({ category: category, color: color, mood: mood });
+    console.log('[DRIPSHI P2.6] oshiName:', oshiName, '← 検索には不使用');
+    console.log('[DRIPSHI P2.6] keywords:', keywords);
 
-    var searchInput = {
-      rawText:        rawText,
-      oshiName:       rawText,
-      colors:         cs2SelectedTags.color.slice(),
-      moods:          cs2SelectedTags.mood.slice(),
-      motifs:         cs2SelectedTags.motif.slice(),
-      category:       cs2SelectedTags.category[0] || undefined,
-      budgetMax:      budgetVal ? parseInt(budgetVal, 10) : undefined,
-      dailyWearLevel: cs2DailyLevel
-    };
-
-    // conceptObject に正規化して出力
-    var co = buildConceptObject(searchInput);
-    var rakutenQuery = buildRakutenSearchQuery(searchInput);
-    var keywords = [rakutenQuery.mainQuery].concat(rakutenQuery.subQueries);
-    console.log('[DRIPSHI] conceptObject:', co);
-    console.log('[DRIPSHI] rakutenQuery:', rakutenQuery);
-    console.log('[DRIPSHI] keywords:', keywords);
-
-    // 解釈エリア表示
+    /* 解釈バナー表示 */
     var interpretEl = document.getElementById('cs2Interpret');
     var textEl      = document.getElementById('cs2InterpretText');
-    var color = co.color || '';
-    var vibe  = co.vibe  || '';
-    var concept = (color || vibe)
-      ? '"' + [color, vibe].filter(Boolean).join('の') + 'の気品"'
-      : '"日常に溶ける概念"';
-    textEl.textContent = '今回は' + concept + 'として解釈しました';
+    var displayName = oshiName || '今日の気分';
+    textEl.innerHTML = '<b>' + displayName + '</b> をイメージ<br>'
+      + '<span style="font-size:10px;opacity:.7">' + color + ' × ' + mood + ' × ' + category + '</span>';
     interpretEl.classList.add('show');
 
-    // 生成エンジン（非表示の旧UI要素）へブリッジ（Phase 2.2 楽天API実装後に直接呼び出しに差し替え予定）
-    var oshiInput    = document.getElementById('csOshiName');
-    var conceptInput = document.getElementById('csConceptText');
-    var budgetInput  = document.getElementById('csBudget');
-    if (oshiInput && co.oshiName)   oshiInput.value   = co.oshiName;
-    if (conceptInput) {
-      var bridgeText = [co.vibe, co.color, co.category].filter(Boolean).join(' ') || rawText;
-      if (bridgeText) conceptInput.value = bridgeText;
+    /* 結果エリアにローディング表示 */
+    var resultEl = document.getElementById('conceptResult');
+    resultEl.classList.add('show');
+    resultEl.innerHTML = '<div class="cs-loading"><div class="ai-loading"><span></span><span></span><span></span></div><div class="cs-loading-text">構造化キーワードで検索中…</div></div>';
+
+    /* 検索実行 */
+    var btn = this;
+    btn.disabled = true;
+    try {
+      var items = await searchRakutenItems(keywords, budget);
+      if (!items || items.length === 0) {
+        /* モックフォールバック */
+        var mockInput = { category: category, color: color, mood: mood, budget: budget || 10000 };
+        var co2 = { oshiName: displayName, vibe: mood, color: color, category: category, budget: budget || 10000 };
+        items = generateMockProducts(co2, keywords);
+      }
+
+      var concept = {
+        conceptTitle: displayName + ' の概念コーデ',
+        explanation:  color + ' × ' + mood + ' の世界観を、' + category + 'で表現するキーワードに変換しました。',
+        keywords:     keywords,
+        products:     items,
+        oshiName:     displayName,
+        budget:       budget || 10000
+      };
+      renderConceptResult(concept, resultEl);
+
+      /* 0件メッセージ */
+      if (!items.length) {
+        resultEl.innerHTML = '<div style="padding:24px;text-align:center;font-size:12px;color:var(--tm);line-height:1.8;">'
+          + '条件に合う商品が見つかりませんでした。<br>カラーや雰囲気を変えて再検索してください</div>';
+      }
+    } finally {
+      btn.disabled = false;
     }
-    if (budgetInput && budgetVal) budgetInput.value = budgetVal;
-    var genBtn = document.getElementById('csGenBtn');
-    if (genBtn) genBtn.click();
   });
+
 })();
 
 })();
