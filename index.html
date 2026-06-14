@@ -463,6 +463,16 @@ html,body{margin:0;padding:0;background:#C8C5BF;min-height:100vh;display:flex;ju
 
 /* ═══ Phase 2.6 構造化検索UI ═══ */
 .p26-field{margin-bottom:14px;}
+/* 中古トグル */
+.p26-used-toggle{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:var(--surf);border-radius:10px;border:.5px solid var(--bdm);cursor:pointer;transition:background .2s;}
+.p26-used-toggle:hover{background:var(--pale);}
+.p26-used-left{display:flex;flex-direction:column;gap:2px;}
+.p26-used-label{font-size:12px;font-weight:500;color:var(--tp);letter-spacing:.04em;}
+.p26-used-sub{font-size:10px;color:var(--tm);letter-spacing:.04em;}
+.p26-toggle-track{width:40px;height:22px;border-radius:11px;background:var(--bdm);position:relative;transition:background .3s;flex-shrink:0;}
+.p26-toggle-track.on{background:var(--accent);}
+.p26-toggle-thumb{width:18px;height:18px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;transition:transform .3s cubic-bezier(.4,0,.2,1);box-shadow:0 1px 4px rgba(0,0,0,.18);}
+.p26-toggle-track.on .p26-toggle-thumb{transform:translateX(18px);}
 .p26-label{font-size:11px;letter-spacing:.08em;color:var(--ts);margin-bottom:8px;display:flex;align-items:center;gap:6px;}
 .p26-required{font-size:9px;letter-spacing:.1em;color:var(--accent);background:var(--pale);padding:2px 6px;border-radius:10px;}
 .p26-input{width:100%;height:40px;border-radius:10px;border:.5px solid var(--bdm);background:var(--surf);color:var(--tp);font-family:'DM Sans',sans-serif;font-size:13px;padding:0 14px;outline:none;transition:border-color .2s;-webkit-appearance:none;}
@@ -682,6 +692,19 @@ html,body{margin:0;padding:0;background:#C8C5BF;min-height:100vh;display:flex;ju
           <div id="cs2DailyRow"></div>
           <textarea id="cs2FreeText"></textarea>
           <select id="cs2Budget"></select>
+        </div>
+
+        <!-- ⑥ 中古も含める -->
+        <div class="p26-field">
+          <div class="p26-used-toggle" id="p26UsedToggle">
+            <div class="p26-used-left">
+              <div class="p26-used-label">⑥ 中古も含める</div>
+              <div class="p26-used-sub">一点物やお得な商品も探す</div>
+            </div>
+            <div class="p26-toggle-track" id="p26ToggleTrack">
+              <div class="p26-toggle-thumb" id="p26ToggleThumb"></div>
+            </div>
+          </div>
         </div>
 
         <!-- 検索ボタン -->
@@ -2922,7 +2945,17 @@ function buildRakutenSearchQuery(input) {
   };
 
   /* Phase2.7: 選択状態（カラー・雰囲気は配列管理） */
-  var p27 = { category: '', colors: [], moods: [], budget: '' };
+  var p27 = { category: '', colors: [], moods: [], budget: '', includeUsedItems: false };
+
+  /* Phase2.8: 中古トグル */
+  var p26ToggleTrack = document.getElementById('p26ToggleTrack');
+  var p26UsedToggle  = document.getElementById('p26UsedToggle');
+  if (p26UsedToggle) {
+    p26UsedToggle.addEventListener('click', function() {
+      p27.includeUsedItems = !p27.includeUsedItems;
+      if (p26ToggleTrack) p26ToggleTrack.classList.toggle('on', p27.includeUsedItems);
+    });
+  }
 
   /* Phase2.7: チップ選択ロジック */
   document.querySelectorAll('.p26-chip').forEach(function(chip) {
@@ -3050,6 +3083,15 @@ function buildRakutenSearchQuery(input) {
     btn.disabled = true;
     try {
       var items = await searchRakutenItems(keywords, budget);
+
+      /* Phase2.8: 中古フィルタ（OFFの場合は除外キーワードを含む商品を除去） */
+      if (!p27.includeUsedItems && items && items.length > 0) {
+        var usedKeywords = ['中古', '古着', 'USED', 'used', 'リユース', 'リサイクル', 'セカンドハンド'];
+        items = items.filter(function(item) {
+          var target = [(item.name || ''), (item.itemName || ''), (item.shop || ''), (item.shopName || '')].join(' ');
+          return !usedKeywords.some(function(kw) { return target.indexOf(kw) !== -1; });
+        });
+      }
       if (!items || items.length === 0) {
         var co2 = { oshiName: displayName, vibe: moodLabel, color: colorLabel, category: category, budget: budget || 10000 };
         items = generateMockProducts(co2, keywords);
