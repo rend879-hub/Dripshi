@@ -381,26 +381,34 @@ html,body{margin:0;padding:0;background:#C8C5BF;min-height:100vh;display:flex;ju
 .cr-kw-list{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;}
 .cr-kw-tag{display:inline-block;font-size:10px;letter-spacing:.06em;padding:4px 10px;border-radius:20px;background:var(--pale);color:var(--accent);border:.5px solid rgba(0,0,0,.06);}
 .cr-products-label{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--tm);margin-bottom:10px;}
-.cr-products{display:flex;flex-direction:column;gap:10px;padding:0 18px;}
-/* ── 楽天仕様 商品カード (Phase 2.2) ── */
-.cr-prod-card{background:#fff;border-radius:12px;border:.5px solid var(--bd);overflow:hidden;}
-.cr-prod-img{width:100%;height:90px;background:var(--surf);display:flex;align-items:center;justify-content:center;position:relative;}
-.cr-prod-img-placeholder{display:flex;flex-direction:column;align-items:center;gap:6px;}
+.cr-products{display:flex;flex-direction:column;gap:14px;padding:0 18px;}
+/* ── 楽天仕様 商品カード (Phase 2.6) ── */
+.cr-prod-card{background:#fff;border-radius:14px;border:.5px solid var(--bd);overflow:hidden;box-shadow:0 2px 10px rgba(44,42,38,.05);}
+/* 画像エリア：縦比率固定でトリミング */
+.cr-prod-img{width:100%;aspect-ratio:4/3;background:var(--surf);position:relative;overflow:hidden;}
+.cr-prod-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+.cr-prod-img-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;}
 .cr-prod-sil{flex-shrink:0;}
-.cr-prod-source-badge{position:absolute;top:6px;right:8px;font-size:8px;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:20px;font-weight:500;}
-.cr-prod-source-badge.badge-rakuten{background:rgba(191,60,60,.12);color:#B83A3A;border:.5px solid rgba(191,60,60,.25);}
-.cr-prod-source-badge.badge-sample{background:rgba(44,42,38,.08);color:var(--tm);border:.5px solid var(--bd);}
-.cr-prod-body{padding:10px 12px 4px;}
-.cr-prod-name{font-size:12px;font-weight:500;color:var(--tp);margin-bottom:4px;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-.cr-prod-price{font-size:15px;font-weight:500;color:var(--accent);margin-bottom:3px;letter-spacing:.02em;}
-.cr-prod-shop{font-size:10px;color:var(--tm);margin-bottom:4px;}
-.cr-prod-kw-wrap{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px;}
+/* バッジ：画像左上に */
+.cr-prod-source-badge{position:absolute;top:8px;left:8px;font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:20px;font-weight:600;backdrop-filter:blur(4px);}
+.cr-prod-source-badge.badge-rakuten{background:rgba(184,58,58,.15);color:#B83A3A;border:.5px solid rgba(184,58,58,.3);}
+.cr-prod-source-badge.badge-sample{background:rgba(44,42,38,.1);color:var(--tm);border:.5px solid var(--bd);}
+/* 本文エリア */
+.cr-prod-body{padding:12px 14px 8px;}
+.cr-prod-name{font-size:12px;font-weight:500;color:var(--tp);margin-bottom:8px;line-height:1.65;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+/* 価格とショップを横並び */
+.cr-prod-meta{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:10px;}
+.cr-prod-price{font-size:17px;font-weight:600;color:var(--accent);letter-spacing:.01em;flex-shrink:0;}
+.cr-prod-shop{font-size:10px;color:var(--tm);text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;min-width:0;}
+.cr-prod-kw-wrap{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:4px;}
 .cr-prod-kw{display:inline-block;font-size:9px;letter-spacing:.06em;padding:2px 7px;border-radius:20px;background:var(--pale);color:var(--accent);}
-.cr-prod-btns{display:flex;gap:6px;padding:0 12px 10px;}
-.cr-prod-save{flex:1;height:30px;border-radius:8px;border:.5px solid var(--bdm);background:none;color:var(--ts);font-family:'DM Sans',sans-serif;font-size:10px;cursor:pointer;transition:background .2s,border-color .2s,color .2s;-webkit-appearance:none;}
+/* ボタンエリア：楽天ボタンを主役に */
+.cr-prod-btns{display:flex;gap:8px;padding:0 14px 14px;}
+.cr-prod-save{width:44px;flex-shrink:0;height:40px;border-radius:10px;border:.5px solid var(--bdm);background:none;color:var(--ts);font-family:'DM Sans',sans-serif;font-size:10px;cursor:pointer;transition:background .2s,border-color .2s,color .2s;-webkit-appearance:none;display:flex;align-items:center;justify-content:center;}
 .cr-prod-save:hover{background:var(--pale);border-color:var(--accent);color:var(--accent);}
-.cr-prod-rakuten{flex:1;height:30px;border-radius:8px;border:none;background:var(--accent);color:#fff;font-family:'DM Sans',sans-serif;font-size:10px;cursor:pointer;transition:filter .2s;-webkit-appearance:none;}
-.cr-prod-rakuten:hover{filter:brightness(.88);}
+.cr-prod-rakuten{flex:1;height:40px;border-radius:10px;border:none;background:var(--accent);color:#fff;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:.06em;cursor:pointer;transition:filter .2s,transform .1s;-webkit-appearance:none;}
+.cr-prod-rakuten:hover{filter:brightness(.9);}
+.cr-prod-rakuten:active{transform:scale(.98);}
 /* ── 楽天API設定 (Settings) ── */
 .rakuten-api-blk{padding:14px 16px;background:#fff;border-radius:12px;border:.5px solid var(--bd);}
 .rakuten-api-label{font-size:11px;color:var(--ts);margin-bottom:6px;letter-spacing:.04em;}
@@ -2547,26 +2555,26 @@ function renderConceptResult(concept, el) {
     // Phase 2.3: imageUrl / image 両対応
     var imgSrc = p.imageUrl || p.image || '';
     var imgHtml = (imgSrc !== '')
-      ? '<img src="'+imgSrc+'" alt="'+((p.name||p.itemName||'').replace(/"/g,'&quot;'))+'" style="width:100%;height:90px;object-fit:cover;display:block;">'
+      ? '<img src="'+imgSrc+'" alt="'+((p.name||p.itemName||'').replace(/"/g,'&quot;'))+'">'
       : '<div class="cr-prod-img-placeholder"><div style="'+silCss+'"></div></div>';
-    var kwParts = (p.keyword||'').split(/\s+/).filter(Boolean).slice(0,3);
-    var kwTagsHtml = kwParts.map(function(k){return '<span class="cr-prod-kw">'+k+'</span>';}).join('');
     // Phase 2.3: productUrl / url / itemUrl すべて対応
     var itemUrl = p.productUrl || p.url || p.itemUrl || '';
+    var isRakuten = p.source === 'rakuten';
     return '<div class="cr-prod-card" data-prod-id="'+p.id+'">'
       + '<div class="cr-prod-img">'
       +   imgHtml
-      +   '<div class="cr-prod-source-badge '+(p.source==='rakuten'?'badge-rakuten':'badge-sample')+'">'+(p.source==='rakuten'?'RAKUTEN':'SAMPLE')+'</div>'
+      +   '<div class="cr-prod-source-badge '+(isRakuten?'badge-rakuten':'badge-sample')+'">'+(isRakuten?'RAKUTEN':'SAMPLE')+'</div>'
       + '</div>'
       + '<div class="cr-prod-body">'
       +   '<div class="cr-prod-name">'+(p.name||p.itemName||'')+'</div>'
-      +   '<div class="cr-prod-price">¥'+(p.price||0).toLocaleString()+'</div>'
-      +   '<div class="cr-prod-shop">'+(p.shop||p.shopName||'')+'</div>'
-      +   '<div class="cr-prod-kw-wrap">'+kwTagsHtml+'</div>'
+      +   '<div class="cr-prod-meta">'
+      +     '<div class="cr-prod-price">¥'+(p.price||0).toLocaleString()+'</div>'
+      +     '<div class="cr-prod-shop">'+(p.shop||p.shopName||'')+'</div>'
+      +   '</div>'
       + '</div>'
       + '<div class="cr-prod-btns">'
-      +   '<button class="cr-prod-save" data-prod-id="'+p.id+'" type="button">保存</button>'
-      +   '<button class="cr-prod-rakuten" data-item-url="'+itemUrl+'" type="button">楽天で見る</button>'
+      +   '<button class="cr-prod-save" data-prod-id="'+p.id+'" type="button" title="クローゼットに保存">♡</button>'
+      +   '<button class="cr-prod-rakuten" data-item-url="'+itemUrl+'" type="button">楽天で見る →</button>'
       + '</div>'
       + '</div>';
   }).join('');
